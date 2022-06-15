@@ -1,0 +1,1219 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "c081932b",
+   "metadata": {},
+   "source": [
+    "# Table of Contents\n",
+    "-Import libraries and data\n",
+    "\n",
+    "-Data cleaning\n",
+    "\n",
+    "    -Check for missing, duplicates, mixed data types, update column names\n",
+    "    \n",
+    "-Conduct initial exploratory analysis"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "e830b50a",
+   "metadata": {},
+   "source": [
+    "# Import Libraries and Data"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "id": "20344b6f",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Import Libraries\n",
+    "import pandas as pd\n",
+    "import numpy as np\n",
+    "import os"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "id": "132eacf1",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Remember project folder file path\n",
+    "path = r'C:\\Users\\rstev\\Documents\\06_22 Etsy Top 10000 Sellers'"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "id": "2e9b52fd",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'C:\\\\Users\\\\rstev\\\\Documents\\\\06_22 Etsy Top 10000 Sellers'"
+      ]
+     },
+     "execution_count": 10,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "path"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 21,
+   "id": "05e855f4",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Import data\n",
+    "df_etsy = pd.read_csv(os.path.join(path, 'Data', 'Etsy Top Sellers Data_Prepared v2.csv'))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 22,
+   "id": "79a8839e",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>shop_id</th>\n",
+       "      <th>shop_name</th>\n",
+       "      <th>url</th>\n",
+       "      <th>shop_create_date</th>\n",
+       "      <th>month_create</th>\n",
+       "      <th>year_create</th>\n",
+       "      <th>shop_update_date</th>\n",
+       "      <th>sold_count</th>\n",
+       "      <th>additional_customization</th>\n",
+       "      <th>active_listing_count</th>\n",
+       "      <th>city</th>\n",
+       "      <th>state</th>\n",
+       "      <th>country</th>\n",
+       "      <th>headline</th>\n",
+       "      <th>favorites_count</th>\n",
+       "      <th>average_rating</th>\n",
+       "      <th>total_rating_count</th>\n",
+       "      <th>average_rating_count</th>\n",
+       "      <th>accepts_direct_checkout</th>\n",
+       "      <th>accepts_paypal</th>\n",
+       "      <th>ships_to_country_ids</th>\n",
+       "      <th>is_eligible_free_shipping</th>\n",
+       "      <th>has_min_free_shipping</th>\n",
+       "      <th>has_free_shipping</th>\n",
+       "      <th>ships_to_regions</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>6923427</td>\n",
+       "      <td>kawaiistickers4you</td>\n",
+       "      <td>https://www.etsy.com/shop/kawaiistickers4you</td>\n",
+       "      <td>5/18/2012</td>\n",
+       "      <td>May</td>\n",
+       "      <td>2012</td>\n",
+       "      <td>1643091607</td>\n",
+       "      <td>27723</td>\n",
+       "      <td>False</td>\n",
+       "      <td>2</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>United States</td>\n",
+       "      <td>Kawaiistickers4you</td>\n",
+       "      <td>6931</td>\n",
+       "      <td>1.0</td>\n",
+       "      <td>9628</td>\n",
+       "      <td>1</td>\n",
+       "      <td>False</td>\n",
+       "      <td>True</td>\n",
+       "      <td>[193, 105, 99, 129, 215, 220, 128, 103, 165, 1...</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>5242648</td>\n",
+       "      <td>JustForMeSewing</td>\n",
+       "      <td>https://www.etsy.com/shop/JustForMeSewing</td>\n",
+       "      <td>10/4/2010</td>\n",
+       "      <td>October</td>\n",
+       "      <td>2010</td>\n",
+       "      <td>1632363895</td>\n",
+       "      <td>39900</td>\n",
+       "      <td>False</td>\n",
+       "      <td>2</td>\n",
+       "      <td>Roanoke</td>\n",
+       "      <td>Virginia</td>\n",
+       "      <td>United States</td>\n",
+       "      <td>Monogrammed clothing and decor customized Just...</td>\n",
+       "      <td>12500</td>\n",
+       "      <td>5.0</td>\n",
+       "      <td>5470</td>\n",
+       "      <td>1</td>\n",
+       "      <td>True</td>\n",
+       "      <td>False</td>\n",
+       "      <td>[209, 0, 79, 123, 61, 220]</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>5593341</td>\n",
+       "      <td>SwellAndGrand</td>\n",
+       "      <td>https://www.etsy.com/shop/SwellAndGrand</td>\n",
+       "      <td>10/4/2010</td>\n",
+       "      <td>October</td>\n",
+       "      <td>2010</td>\n",
+       "      <td>1640184600</td>\n",
+       "      <td>33696</td>\n",
+       "      <td>False</td>\n",
+       "      <td>5</td>\n",
+       "      <td>oak park</td>\n",
+       "      <td>Illinois</td>\n",
+       "      <td>United States</td>\n",
+       "      <td>Christmas Fonts</td>\n",
+       "      <td>13407</td>\n",
+       "      <td>5.0</td>\n",
+       "      <td>4595</td>\n",
+       "      <td>1</td>\n",
+       "      <td>True</td>\n",
+       "      <td>False</td>\n",
+       "      <td>[0, 209]</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>6441254</td>\n",
+       "      <td>PrettyThingsSupplies</td>\n",
+       "      <td>https://www.etsy.com/shop/PrettyThingsSupplies</td>\n",
+       "      <td>7/30/2011</td>\n",
+       "      <td>July</td>\n",
+       "      <td>2011</td>\n",
+       "      <td>1647391292</td>\n",
+       "      <td>29155</td>\n",
+       "      <td>False</td>\n",
+       "      <td>0</td>\n",
+       "      <td>Rochester Hills</td>\n",
+       "      <td>Michigan</td>\n",
+       "      <td>United States</td>\n",
+       "      <td>Stretch Lace, Sew on Rhinestones, FOE, Fabric ...</td>\n",
+       "      <td>4649</td>\n",
+       "      <td>5.0</td>\n",
+       "      <td>7851</td>\n",
+       "      <td>1</td>\n",
+       "      <td>True</td>\n",
+       "      <td>False</td>\n",
+       "      <td>[79, 105, 93, 103, 61, 123, 91, 209, 0, 193, 1...</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>6176258</td>\n",
+       "      <td>KangarooCare</td>\n",
+       "      <td>https://www.etsy.com/shop/KangarooCare</td>\n",
+       "      <td>1/17/2011</td>\n",
+       "      <td>January</td>\n",
+       "      <td>2011</td>\n",
+       "      <td>1647708638</td>\n",
+       "      <td>25779</td>\n",
+       "      <td>True</td>\n",
+       "      <td>12</td>\n",
+       "      <td>Tallinn</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>Estonia</td>\n",
+       "      <td>Wood Nursing &amp; Teething Necklaces for Moms</td>\n",
+       "      <td>12096</td>\n",
+       "      <td>5.0</td>\n",
+       "      <td>3975</td>\n",
+       "      <td>1</td>\n",
+       "      <td>True</td>\n",
+       "      <td>False</td>\n",
+       "      <td>[131, 191, 148, 189, 145, 165, 118, 100, 272, ...</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "      <td>NaN</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   shop_id             shop_name  \\\n",
+       "0  6923427    kawaiistickers4you   \n",
+       "1  5242648       JustForMeSewing   \n",
+       "2  5593341         SwellAndGrand   \n",
+       "3  6441254  PrettyThingsSupplies   \n",
+       "4  6176258          KangarooCare   \n",
+       "\n",
+       "                                              url shop_create_date  \\\n",
+       "0    https://www.etsy.com/shop/kawaiistickers4you        5/18/2012   \n",
+       "1       https://www.etsy.com/shop/JustForMeSewing        10/4/2010   \n",
+       "2         https://www.etsy.com/shop/SwellAndGrand        10/4/2010   \n",
+       "3  https://www.etsy.com/shop/PrettyThingsSupplies        7/30/2011   \n",
+       "4          https://www.etsy.com/shop/KangarooCare        1/17/2011   \n",
+       "\n",
+       "  month_create  year_create  shop_update_date  sold_count  \\\n",
+       "0          May         2012        1643091607       27723   \n",
+       "1      October         2010        1632363895       39900   \n",
+       "2      October         2010        1640184600       33696   \n",
+       "3         July         2011        1647391292       29155   \n",
+       "4      January         2011        1647708638       25779   \n",
+       "\n",
+       "   additional_customization  active_listing_count             city     state  \\\n",
+       "0                     False                     2              NaN       NaN   \n",
+       "1                     False                     2          Roanoke  Virginia   \n",
+       "2                     False                     5         oak park  Illinois   \n",
+       "3                     False                     0  Rochester Hills  Michigan   \n",
+       "4                      True                    12          Tallinn       NaN   \n",
+       "\n",
+       "         country                                           headline  \\\n",
+       "0  United States                                 Kawaiistickers4you   \n",
+       "1  United States  Monogrammed clothing and decor customized Just...   \n",
+       "2  United States                                    Christmas Fonts   \n",
+       "3  United States  Stretch Lace, Sew on Rhinestones, FOE, Fabric ...   \n",
+       "4        Estonia         Wood Nursing & Teething Necklaces for Moms   \n",
+       "\n",
+       "   favorites_count  average_rating  total_rating_count  average_rating_count  \\\n",
+       "0             6931             1.0                9628                     1   \n",
+       "1            12500             5.0                5470                     1   \n",
+       "2            13407             5.0                4595                     1   \n",
+       "3             4649             5.0                7851                     1   \n",
+       "4            12096             5.0                3975                     1   \n",
+       "\n",
+       "   accepts_direct_checkout  accepts_paypal  \\\n",
+       "0                    False            True   \n",
+       "1                     True           False   \n",
+       "2                     True           False   \n",
+       "3                     True           False   \n",
+       "4                     True           False   \n",
+       "\n",
+       "                                ships_to_country_ids  \\\n",
+       "0  [193, 105, 99, 129, 215, 220, 128, 103, 165, 1...   \n",
+       "1                         [209, 0, 79, 123, 61, 220]   \n",
+       "2                                           [0, 209]   \n",
+       "3  [79, 105, 93, 103, 61, 123, 91, 209, 0, 193, 1...   \n",
+       "4  [131, 191, 148, 189, 145, 165, 118, 100, 272, ...   \n",
+       "\n",
+       "  is_eligible_free_shipping has_min_free_shipping has_free_shipping  \\\n",
+       "0                       NaN                   NaN               NaN   \n",
+       "1                       NaN                   NaN               NaN   \n",
+       "2                       NaN                   NaN               NaN   \n",
+       "3                       NaN                   NaN               NaN   \n",
+       "4                       NaN                   NaN               NaN   \n",
+       "\n",
+       "  ships_to_regions  \n",
+       "0              NaN  \n",
+       "1              NaN  \n",
+       "2              NaN  \n",
+       "3              NaN  \n",
+       "4              NaN  "
+      ]
+     },
+     "execution_count": 22,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df_etsy.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 23,
+   "id": "75afdd72",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Index(['shop_id', 'shop_name', 'url', 'shop_create_date', 'month_create',\n",
+       "       'year_create', 'shop_update_date', 'sold_count',\n",
+       "       'additional_customization', 'active_listing_count', 'city', 'state',\n",
+       "       'country', 'headline', 'favorites_count', 'average_rating',\n",
+       "       'total_rating_count', 'average_rating_count', 'accepts_direct_checkout',\n",
+       "       'accepts_paypal', 'ships_to_country_ids', 'is_eligible_free_shipping',\n",
+       "       'has_min_free_shipping', 'has_free_shipping', 'ships_to_regions'],\n",
+       "      dtype='object')"
+      ]
+     },
+     "execution_count": 23,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df_etsy.columns"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "52c60260",
+   "metadata": {},
+   "source": [
+    "# Data Wrangling and Cleaning"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 24,
+   "id": "432fa4c4",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "pd.set_option('display.max_columns', None)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 25,
+   "id": "a952594e",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>shop_id</th>\n",
+       "      <th>year_create</th>\n",
+       "      <th>shop_update_date</th>\n",
+       "      <th>sold_count</th>\n",
+       "      <th>active_listing_count</th>\n",
+       "      <th>favorites_count</th>\n",
+       "      <th>average_rating</th>\n",
+       "      <th>total_rating_count</th>\n",
+       "      <th>average_rating_count</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>count</th>\n",
+       "      <td>1.000000e+04</td>\n",
+       "      <td>10000.00000</td>\n",
+       "      <td>1.000000e+04</td>\n",
+       "      <td>1.000000e+04</td>\n",
+       "      <td>10000.000000</td>\n",
+       "      <td>10000.000000</td>\n",
+       "      <td>10000.000000</td>\n",
+       "      <td>10000.000000</td>\n",
+       "      <td>10000.000000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>mean</th>\n",
+       "      <td>1.160696e+07</td>\n",
+       "      <td>2014.40400</td>\n",
+       "      <td>1.648934e+09</td>\n",
+       "      <td>5.348419e+04</td>\n",
+       "      <td>851.312800</td>\n",
+       "      <td>7625.960200</td>\n",
+       "      <td>4.896958</td>\n",
+       "      <td>8471.473400</td>\n",
+       "      <td>1964.225800</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>std</th>\n",
+       "      <td>5.558173e+06</td>\n",
+       "      <td>3.13837</td>\n",
+       "      <td>1.054144e+06</td>\n",
+       "      <td>6.216968e+04</td>\n",
+       "      <td>1855.144018</td>\n",
+       "      <td>9812.055333</td>\n",
+       "      <td>0.107173</td>\n",
+       "      <td>10895.584957</td>\n",
+       "      <td>2954.134447</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>min</th>\n",
+       "      <td>5.037340e+06</td>\n",
+       "      <td>2010.00000</td>\n",
+       "      <td>1.579426e+09</td>\n",
+       "      <td>2.272900e+04</td>\n",
+       "      <td>0.000000</td>\n",
+       "      <td>88.000000</td>\n",
+       "      <td>1.000000</td>\n",
+       "      <td>411.000000</td>\n",
+       "      <td>1.000000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>25%</th>\n",
+       "      <td>6.815317e+06</td>\n",
+       "      <td>2012.00000</td>\n",
+       "      <td>1.648986e+09</td>\n",
+       "      <td>2.806850e+04</td>\n",
+       "      <td>167.000000</td>\n",
+       "      <td>2388.000000</td>\n",
+       "      <td>4.868800</td>\n",
+       "      <td>3853.500000</td>\n",
+       "      <td>610.000000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>50%</th>\n",
+       "      <td>1.017316e+07</td>\n",
+       "      <td>2014.00000</td>\n",
+       "      <td>1.649000e+09</td>\n",
+       "      <td>3.675000e+04</td>\n",
+       "      <td>419.000000</td>\n",
+       "      <td>4744.000000</td>\n",
+       "      <td>4.924100</td>\n",
+       "      <td>5871.000000</td>\n",
+       "      <td>1235.000000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>75%</th>\n",
+       "      <td>1.505625e+07</td>\n",
+       "      <td>2017.00000</td>\n",
+       "      <td>1.649014e+09</td>\n",
+       "      <td>5.630550e+04</td>\n",
+       "      <td>940.000000</td>\n",
+       "      <td>9247.500000</td>\n",
+       "      <td>4.958300</td>\n",
+       "      <td>9281.000000</td>\n",
+       "      <td>2349.250000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>max</th>\n",
+       "      <td>3.280814e+07</td>\n",
+       "      <td>2021.00000</td>\n",
+       "      <td>1.649118e+09</td>\n",
+       "      <td>1.839198e+06</td>\n",
+       "      <td>83954.000000</td>\n",
+       "      <td>258218.000000</td>\n",
+       "      <td>5.000000</td>\n",
+       "      <td>267763.000000</td>\n",
+       "      <td>113772.000000</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "            shop_id  year_create  shop_update_date    sold_count  \\\n",
+       "count  1.000000e+04  10000.00000      1.000000e+04  1.000000e+04   \n",
+       "mean   1.160696e+07   2014.40400      1.648934e+09  5.348419e+04   \n",
+       "std    5.558173e+06      3.13837      1.054144e+06  6.216968e+04   \n",
+       "min    5.037340e+06   2010.00000      1.579426e+09  2.272900e+04   \n",
+       "25%    6.815317e+06   2012.00000      1.648986e+09  2.806850e+04   \n",
+       "50%    1.017316e+07   2014.00000      1.649000e+09  3.675000e+04   \n",
+       "75%    1.505625e+07   2017.00000      1.649014e+09  5.630550e+04   \n",
+       "max    3.280814e+07   2021.00000      1.649118e+09  1.839198e+06   \n",
+       "\n",
+       "       active_listing_count  favorites_count  average_rating  \\\n",
+       "count          10000.000000     10000.000000    10000.000000   \n",
+       "mean             851.312800      7625.960200        4.896958   \n",
+       "std             1855.144018      9812.055333        0.107173   \n",
+       "min                0.000000        88.000000        1.000000   \n",
+       "25%              167.000000      2388.000000        4.868800   \n",
+       "50%              419.000000      4744.000000        4.924100   \n",
+       "75%              940.000000      9247.500000        4.958300   \n",
+       "max            83954.000000    258218.000000        5.000000   \n",
+       "\n",
+       "       total_rating_count  average_rating_count  \n",
+       "count        10000.000000          10000.000000  \n",
+       "mean          8471.473400           1964.225800  \n",
+       "std          10895.584957           2954.134447  \n",
+       "min            411.000000              1.000000  \n",
+       "25%           3853.500000            610.000000  \n",
+       "50%           5871.000000           1235.000000  \n",
+       "75%           9281.000000           2349.250000  \n",
+       "max         267763.000000         113772.000000  "
+      ]
+     },
+     "execution_count": 25,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df_etsy.describe()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 26,
+   "id": "47d8c84e",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "Index(['shop_id', 'shop_name', 'url', 'shop_create_date', 'month_create',\n",
+       "       'year_create', 'shop_update_date', 'sold_count',\n",
+       "       'additional_customization', 'active_listing_count', 'city', 'state',\n",
+       "       'country', 'headline', 'favorites_count', 'average_rating',\n",
+       "       'total_rating_count', 'average_rating_count', 'accepts_direct_checkout',\n",
+       "       'accepts_paypal', 'ships_to_country_ids', 'is_eligible_free_shipping',\n",
+       "       'has_min_free_shipping', 'has_free_shipping', 'ships_to_regions'],\n",
+       "      dtype='object')"
+      ]
+     },
+     "execution_count": 26,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df_etsy.columns"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 28,
+   "id": "189b8504",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "city\n",
+      "state\n",
+      "country\n",
+      "headline\n",
+      "is_eligible_free_shipping\n",
+      "has_min_free_shipping\n",
+      "has_free_shipping\n",
+      "ships_to_regions\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Check for mixed data types\n",
+    "for col in df_etsy.columns.tolist():\n",
+    "  weird = (df_etsy[[col]].applymap(type) != df_etsy[[col]].iloc[0].apply(type)).any(axis = 1)\n",
+    "  if len (df_etsy[weird]) > 0:\n",
+    "    print (col)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 35,
+   "id": "a8c31db1",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Changing some data types\n",
+    "df_etsy['shop_id'] = df_etsy['shop_id'].astype('str')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 36,
+   "id": "60d0bfbc",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df_etsy['city'] = df_etsy['city'].astype('str')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 37,
+   "id": "afdc3b6e",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df_etsy['state'] = df_etsy['state'].astype('str')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 38,
+   "id": "51c052aa",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df_etsy['country'] = df_etsy['country'].astype('str')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 39,
+   "id": "04eb73d4",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df_etsy['headline'] = df_etsy['headline'].astype('str')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 44,
+   "id": "13d0d7f1",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df_etsy['ships_to_regions'] = df_etsy['ships_to_regions'].astype('str')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 41,
+   "id": "d96347ec",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df_etsy['is_eligible_free_shipping'] = df_etsy['is_eligible_free_shipping'].astype('bool')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 42,
+   "id": "98444da2",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df_etsy['has_min_free_shipping'] = df_etsy['has_min_free_shipping'].astype('bool')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 43,
+   "id": "e547df7f",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df_etsy['has_free_shipping'] = df_etsy['has_free_shipping'].astype('bool')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 45,
+   "id": "05d0cf60",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Check for mixed data types\n",
+    "for col in df_etsy.columns.tolist():\n",
+    "  weird = (df_etsy[[col]].applymap(type) != df_etsy[[col]].iloc[0].apply(type)).any(axis = 1)\n",
+    "  if len (df_etsy[weird]) > 0:\n",
+    "    print (col)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 26,
+   "id": "bac5db09",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "pd.set_option('display.max_rows', None)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 46,
+   "id": "71c8779b",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "shop_id                       object\n",
+       "shop_name                     object\n",
+       "url                           object\n",
+       "shop_create_date              object\n",
+       "month_create                  object\n",
+       "year_create                    int64\n",
+       "shop_update_date               int64\n",
+       "sold_count                     int64\n",
+       "additional_customization        bool\n",
+       "active_listing_count           int64\n",
+       "city                          object\n",
+       "state                         object\n",
+       "country                       object\n",
+       "headline                      object\n",
+       "favorites_count                int64\n",
+       "average_rating               float64\n",
+       "total_rating_count             int64\n",
+       "average_rating_count           int64\n",
+       "accepts_direct_checkout         bool\n",
+       "accepts_paypal                  bool\n",
+       "ships_to_country_ids          object\n",
+       "is_eligible_free_shipping       bool\n",
+       "has_min_free_shipping           bool\n",
+       "has_free_shipping               bool\n",
+       "ships_to_regions              object\n",
+       "dtype: object"
+      ]
+     },
+     "execution_count": 46,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df_etsy.dtypes"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 30,
+   "id": "2bbc43e9",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "shop_id                         0\n",
+       "shop_name                       0\n",
+       "url                             0\n",
+       "shop_create_date                0\n",
+       "month_create                    0\n",
+       "year_create                     0\n",
+       "shop_update_date                0\n",
+       "sold_count                      0\n",
+       "additional_customization        0\n",
+       "active_listing_count            0\n",
+       "city                         1821\n",
+       "state                        3556\n",
+       "country                         4\n",
+       "headline                      494\n",
+       "favorites_count                 0\n",
+       "average_rating                  0\n",
+       "total_rating_count              0\n",
+       "average_rating_count            0\n",
+       "accepts_direct_checkout         0\n",
+       "accepts_paypal                  0\n",
+       "ships_to_country_ids            0\n",
+       "is_eligible_free_shipping    1446\n",
+       "has_min_free_shipping        1446\n",
+       "has_free_shipping            1446\n",
+       "ships_to_regions             1446\n",
+       "dtype: int64"
+      ]
+     },
+     "execution_count": 30,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Checking for missing data\n",
+    "# Some location, headline, and shipping data is missing that can't be imputed, so will leave as is.\n",
+    "df_etsy.isnull().sum()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 48,
+   "id": "08c39b7f",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Look for full dupes, i.e., rows with every column the same\n",
+    "# No dupes\n",
+    "df_dups = df_etsy[df_etsy.duplicated()]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 49,
+   "id": "6e13a6b5",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>shop_id</th>\n",
+       "      <th>shop_name</th>\n",
+       "      <th>url</th>\n",
+       "      <th>shop_create_date</th>\n",
+       "      <th>month_create</th>\n",
+       "      <th>year_create</th>\n",
+       "      <th>shop_update_date</th>\n",
+       "      <th>sold_count</th>\n",
+       "      <th>additional_customization</th>\n",
+       "      <th>active_listing_count</th>\n",
+       "      <th>city</th>\n",
+       "      <th>state</th>\n",
+       "      <th>country</th>\n",
+       "      <th>headline</th>\n",
+       "      <th>favorites_count</th>\n",
+       "      <th>average_rating</th>\n",
+       "      <th>total_rating_count</th>\n",
+       "      <th>average_rating_count</th>\n",
+       "      <th>accepts_direct_checkout</th>\n",
+       "      <th>accepts_paypal</th>\n",
+       "      <th>ships_to_country_ids</th>\n",
+       "      <th>is_eligible_free_shipping</th>\n",
+       "      <th>has_min_free_shipping</th>\n",
+       "      <th>has_free_shipping</th>\n",
+       "      <th>ships_to_regions</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "Empty DataFrame\n",
+       "Columns: [shop_id, shop_name, url, shop_create_date, month_create, year_create, shop_update_date, sold_count, additional_customization, active_listing_count, city, state, country, headline, favorites_count, average_rating, total_rating_count, average_rating_count, accepts_direct_checkout, accepts_paypal, ships_to_country_ids, is_eligible_free_shipping, has_min_free_shipping, has_free_shipping, ships_to_regions]\n",
+       "Index: []"
+      ]
+     },
+     "execution_count": 49,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df_dups"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "74dc79cb",
+   "metadata": {},
+   "source": [
+    "# Initial Exploratory Analysis"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 50,
+   "id": "5462089d",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "September    1773\n",
+       "January       906\n",
+       "October       901\n",
+       "November      803\n",
+       "March         782\n",
+       "August        706\n",
+       "February      703\n",
+       "April         700\n",
+       "July          695\n",
+       "June          695\n",
+       "May           687\n",
+       "December      649\n",
+       "Name: month_create, dtype: int64"
+      ]
+     },
+     "execution_count": 50,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Running some frequencies of variables I want to use to make sure everything looks ok\n",
+    "df_etsy['month_create'].value_counts(dropna = False)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 51,
+   "id": "7a30f114",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "2010    1595\n",
+       "2015    1096\n",
+       "2014    1065\n",
+       "2013     926\n",
+       "2016     901\n",
+       "2012     861\n",
+       "2017     828\n",
+       "2011     747\n",
+       "2018     720\n",
+       "2020     598\n",
+       "2019     591\n",
+       "2021      72\n",
+       "Name: year_create, dtype: int64"
+      ]
+     },
+     "execution_count": 51,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "# Can create variable for length of time in business based on when store was opened\n",
+    "df_etsy['year_create'].value_counts(dropna = False)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 52,
+   "id": "ee2c2296",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "False    5143\n",
+       "True     4857\n",
+       "Name: additional_customization, dtype: int64"
+      ]
+     },
+     "execution_count": 52,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df_etsy['additional_customization'].value_counts(dropna = False)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 53,
+   "id": "6c6ce412",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "United States     7135\n",
+       "United Kingdom    1009\n",
+       "Canada             410\n",
+       "China              222\n",
+       "Germany            148\n",
+       "                  ... \n",
+       "Armenia              1\n",
+       "Chile                1\n",
+       "Jamaica              1\n",
+       "Venezuela            1\n",
+       "Oman                 1\n",
+       "Name: country, Length: 80, dtype: int64"
+      ]
+     },
+     "execution_count": 53,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df_etsy['country'].value_counts(dropna = False)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 54,
+   "id": "11d8ad96",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "True     9431\n",
+       "False     569\n",
+       "Name: accepts_direct_checkout, dtype: int64"
+      ]
+     },
+     "execution_count": 54,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df_etsy['accepts_direct_checkout'].value_counts(dropna = False)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 55,
+   "id": "29b93fef",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "False    9366\n",
+       "True      634\n",
+       "Name: accepts_paypal, dtype: int64"
+      ]
+     },
+     "execution_count": 55,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df_etsy['accepts_paypal'].value_counts(dropna = False)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 56,
+   "id": "b74655b8",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "True     6745\n",
+       "False    3255\n",
+       "Name: is_eligible_free_shipping, dtype: int64"
+      ]
+     },
+     "execution_count": 56,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df_etsy['is_eligible_free_shipping'].value_counts(dropna = False)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 57,
+   "id": "4d7a59f0",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "False    5351\n",
+       "True     4649\n",
+       "Name: has_min_free_shipping, dtype: int64"
+      ]
+     },
+     "execution_count": 57,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df_etsy['has_min_free_shipping'].value_counts(dropna = False)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 58,
+   "id": "56b57da2",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "True     6745\n",
+       "False    3255\n",
+       "Name: has_free_shipping, dtype: int64"
+      ]
+     },
+     "execution_count": 58,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df_etsy['has_free_shipping'].value_counts(dropna = False)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 59,
+   "id": "7bc0c4d4",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Export cleaned data\n",
+    "df_etsy.to_csv(os.path.join(path, 'Data', 'Etsy Top Sellers Data_Prepared v3.csv'))"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.9.7"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
